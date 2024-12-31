@@ -11,7 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
     # Step 1: Checkout the code from GitHub
     - name: Checkout code
@@ -29,9 +29,9 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # Step 4: Set the PYTHONPATH so model is accessible in test scripts
+    # Step 4: Set the PYTHONPATH to the root directory to include 'model'
     - name: Set PYTHONPATH
-      run: echo "PYTHONPATH=$(pwd)/model" >> $GITHUB_ENV
+      run: echo "PYTHONPATH=$(pwd)" >> $GITHUB_ENV
 
     # Step 5: Run pytest to execute tests
     - name: Run Tests
