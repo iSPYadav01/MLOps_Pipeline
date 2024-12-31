@@ -1,11 +1,14 @@
-import pytest
-from sklearn.datasets import load_iris
-from model import train_model
-import joblib
+from model.model import SimpleModel
+import numpy as np
 
 def test_model_training():
-    model = train_model()
-    assert model is not None
-    # Load model and check if it's a RandomForestClassifier
-    model = joblib.load("model/random_forest_model.pkl")
-    assert isinstance(model, RandomForestClassifier)
+    X = np.array([[1], [2], [3]])
+    y = np.array([2, 4, 6])
+
+    model = SimpleModel()
+    model.train(X, y)
+    predictions = model.predict(X)
+
+    assert predictions[0] == y[0], "Test failed for first prediction!"
+
+test_model_training()
