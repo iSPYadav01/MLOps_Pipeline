@@ -1,17 +1,16 @@
 from model.model import SimpleModel
-import numpy as np
 
-def main():
-    # Generate dummy data
-    X = np.array([[1], [2], [3], [4], [5]])
-    y = np.array([2, 4, 6, 8, 10])
+def train():
+    """
+    Train a simple model using hardcoded data.
+    """
+    weight, bias = 2, 0.5  # Hardcoded model parameters
+    model = SimpleModel(weight, bias)
 
-    # Train and predict
-    model = SimpleModel()
-    model.train(X, y)
-    predictions = model.predict(X)
-
-    print("Predictions:", predictions)
+    print("Training the model with sample data...")
+    for data in range(1, 11):  # Fake training loop
+        prediction = model.predict(data)
+        print(f"Input: {data}, Prediction: {prediction}")
 
 if __name__ == "__main__":
-    main()
+    train()
