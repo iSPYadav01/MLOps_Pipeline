@@ -9,7 +9,6 @@ class SimpleModel:
     def train(self, x, y):
         """Train the model using a simple linear regression formula."""
         # Calculating weights (slope) and bias (intercept) using the least squares method
-        n = len(x)
         x_mean = x.mean()
         y_mean = y.mean()
 
