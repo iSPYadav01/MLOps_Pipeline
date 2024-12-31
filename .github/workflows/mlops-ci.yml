@@ -3,10 +3,10 @@ name: MLOps CI/CD Pipeline
 on:
   push:
     branches:
-      - MLOps_Dev_Branch_2  # Trigger action on push to this branch
+      - MLOps_Dev_Branch_2
   pull_request:
     branches:
-      - MLOps_Dev_Branch_2  # Trigger action for PRs to this branch
+      - MLOps_Dev_Branch_2
 
 jobs:
   build:
@@ -17,31 +17,35 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    # Step 2: Set up Python for the project (using Python 3.9 as per requirement)
+    # Step 2: Set up Python 3.9 for the project
     - name: Set up Python 3.9
       uses: actions/setup-python@v4
       with:
-        python-version: '3.9'  # Specify Python version you use
+        python-version: '3.9'
 
-    # Step 3: Install project dependencies (from requirements.txt)
+    # Step 3: Install dependencies from requirements.txt
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    # Step 4: Run Tests on your code with pytest
+    # Step 4: Set the PYTHONPATH so model is accessible in test scripts
+    - name: Set PYTHONPATH
+      run: echo "PYTHONPATH=$(pwd)/model" >> $GITHUB_ENV
+
+    # Step 5: Run pytest to execute tests
     - name: Run Tests
       run: |
-        pytest tests/test_model.py  # Run the test script
+        pytest tests/test_model.py
 
-    # Step 5: Train the model and save the model
+    # Step 6: Train and Save Model
     - name: Train and Save Model
       run: |
-        python model/train.py  # Train and save model to file
-    
-    # Step 6: Upload trained model (using v3 version of the artifact action)
+        python model/train.py
+
+    # Step 7: Upload the trained model
     - name: Upload trained model
       uses: actions/upload-artifact@v3
       with:
         name: trained-model
-        path: trained_model.pkl  # Uploads the trained model
+        path: trained_model.pkl
