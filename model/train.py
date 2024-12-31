@@ -7,7 +7,7 @@ def generate_data():
     """Generates synthetic training data."""
     x = np.random.rand(100, 1)
     y = 3 * x + np.random.normal(0, 0.1, (100, 1))
-    return x, y
+    return x.flatten(), y.flatten()
 
 
 def train_and_save_model():
