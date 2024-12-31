@@ -1,14 +1,30 @@
+import pytest
 from model.model import SimpleModel
-import numpy as np
 
-def test_model_training():
-    X = np.array([[1], [2], [3]])
-    y = np.array([2, 4, 6])
 
+@pytest.fixture
+def sample_data():
+    """Fixture providing sample training data."""
+    x = [1, 2, 3, 4, 5]
+    y = [2, 4, 6, 8, 10]
+    return x, y
+
+
+def test_model_training(sample_data):
+    """Test the model's training method."""
     model = SimpleModel()
-    model.train(X, y)
-    predictions = model.predict(X)
+    x, y = sample_data
+    model.train(x, y)
 
-    assert predictions[0] == y[0], "Test failed for first prediction!"
+    assert model.weights == pytest.approx(2, rel=1e-2)
+    assert model.bias == pytest.approx(0, rel=1e-2)
 
-test_model_training()
+
+def test_model_prediction(sample_data):
+    """Test the model's prediction method."""
+    model = SimpleModel()
+    x, y = sample_data
+    model.train(x, y)
+
+    predictions = model.predict([6, 7])
+    assert predictions == pytest.approx([12, 14], rel=1e-2)
