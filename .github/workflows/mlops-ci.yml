@@ -39,9 +39,9 @@ jobs:
       run: |
         python model/train.py  # Train and save model to file
     
-    # Step 6: (Optional) Upload model file or other artifacts if needed
+    # Step 6: Upload trained model (using v3 version of the artifact action)
     - name: Upload trained model
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: trained-model
         path: trained_model.pkl  # Uploads the trained model
